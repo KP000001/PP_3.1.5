@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin</title>
+</head>
+<body>
+<p th:text="${'Id: ' + user.getId()}">VALUE</p>
+<p th:text="${'Имя: ' + user.getName()}">VALUE</p>
+<p th:text="${'Фамилия: ' + user.getLastname()}">VALUE</p>
+<p th:text="${'Возраст: ' + user.getAge()}">VALUE</p>
+<p th:text="${'Логин: ' + user.getUsername()}">VALUE</p>
+<p th:text="${'Пароль: ' + user.getPassword()}">VALUE</p>
+<p th:text="${'Связь ролей: ' + user.getRoles()}">VALUE</p>
+<span th:each="userRole : ${user.getRoles()}">
+    <p th:text="${'Роль: ' + userRole.getName()}">VALUE</p>
+</span>
+<br/>
+<form th:action="@{/logout}" method="post">
+  <input type="submit" value="LOGOUT">
+</form>
+</body>
+</html>

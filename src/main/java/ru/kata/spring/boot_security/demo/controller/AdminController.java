@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +9,11 @@ import ru.kata.spring.boot_security.demo.service.*;
 import java.util.*;
 
 @Controller
-public class PeopleController {
+public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
 
-    public PeopleController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
@@ -26,12 +25,12 @@ public class PeopleController {
         return "get_all_users";
     }
 
-    @GetMapping(value = "/newUser")
+    @GetMapping(value = "/admin/newUser")
     public String newUser(@ModelAttribute("user") User user) {
         return "new_user";
     }
 
-    @PostMapping(value = "/createUser")
+    @PostMapping(value = "/admin/createUser")
     public String createUser(@ModelAttribute("user") User user,
                              @RequestParam ArrayList<String> listRoleId) {
         Set<Role> userRole = new HashSet<>();
@@ -44,36 +43,29 @@ public class PeopleController {
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "/editUser/{id}")
+    @GetMapping(value = "/admin/editUser/{id}")
     public String editUser(@PathVariable("id") int id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("user", user);
         return "edit_user";
     }
 
-    @PostMapping(value = "/updateUser/{id}")
+    @PostMapping(value = "/admin/updateUser/{id}")
     public String updateUser(@ModelAttribute("user") User user) {
         userService.update(user);
         return "redirect:/admin";
     }
 
-    @PostMapping(value = "/deleteUser/{id}")
+    @PostMapping(value = "/admin/deleteUser/{id}")
     public String deleteUser(@PathVariable("id") int id) {
         userService.delete(id);
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "/user")
-    public String homeUser(Model model, Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        model.addAttribute("user", user);
-        return "home_user";
-    }
-
-    @GetMapping(value = "/user/{id}")
+    @GetMapping(value = "/admin/{id}")
     public String getUserById(@PathVariable("id") int id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("user", user);
-        return "user";
+        return "admin";
     }
 }

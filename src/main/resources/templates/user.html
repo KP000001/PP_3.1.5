@@ -1,28 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>User</title>
 </head>
 <body>
-<p th:text="${'Id: ' + user.getId()}">VALUE</p>
-<p th:text="${'Имя: ' + user.getName()}">VALUE</p>
-<p th:text="${'Фамилия: ' + user.getLastname()}">VALUE</p>
-<p th:text="${'Возраст: ' + user.getAge()}">VALUE</p>
-<p th:text="${'Логин: ' + user.getUsername()}">VALUE</p>
-<p th:text="${'Пароль: ' + user.getPassword()}">VALUE</p>
-<p th:text="${'Связь ролей: ' + user.getRoles()}">VALUE</p>
-<span th:each="userRole : ${user.getRoles()}">
-    <p th:text="${'Роль: ' + userRole.getName()}">VALUE</p>
-</span>
-<a th:href="@{/editUser/{id}(id=${user.getId()})}">
-<input type="submit" value="EDIT"></a>
-<br/>
-<br/>
-<form th:method="DELETE" th:action="@{/deleteUser/{id}(id=${user.getId()})}">
-    <input type="submit" value="DELETE"/>
-</form>
-<br/>
+<div th:object="${user}">
+  <h5>Имя: <strong th:text="${user.name}"></strong></h5>
+  <h5>Фамилия: <strong th:text="${user.lastname}"></strong></h5>
+  <h5>Возраст: <strong th:text="${user.age}"></strong></h5>
+  <h5>Логин: <strong th:text="${user.username}"></strong></h5>
+  <h5>Пароль: <strong th:text="${user.password}"></strong></h5>
+</div>
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="LOGOUT">
 </form>
