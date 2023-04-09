@@ -1,6 +1,5 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,6 +7,7 @@ import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,11 +24,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public User getById(long id) {
-        User user = userRepository.findById(id).orElse(null);
-        Hibernate.initialize(user.getRoles());
-        return user;
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null);
     }
 
     @Override

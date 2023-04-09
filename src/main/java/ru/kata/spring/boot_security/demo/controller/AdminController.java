@@ -18,19 +18,19 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping(value = "/admin")
+    @RequestMapping(value = "/admin")
     public String getAllUsers(Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         return "get_all_users";
     }
 
-    @GetMapping(value = "/admin/newUser")
+    @RequestMapping(value = "/admin/newUser")
     public String newUser(@ModelAttribute("user") User user) {
         return "new_user";
     }
 
-    @PostMapping(value = "/admin/createUser")
+    @RequestMapping(value = "/admin/createUser")
     public String createUser(@ModelAttribute("user") User user,
                              @RequestParam ArrayList<String> listRoleId) {
         Set<Role> userRole = new HashSet<>();
@@ -43,26 +43,26 @@ public class AdminController {
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "/admin/editUser/{id}")
+    @RequestMapping(value = "/admin/editUser/{id}")
     public String editUser(@PathVariable("id") int id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("user", user);
         return "edit_user";
     }
 
-    @PostMapping(value = "/admin/updateUser/{id}")
+    @RequestMapping(value = "/admin/updateUser/{id}")
     public String updateUser(@ModelAttribute("user") User user) {
         userService.update(user);
         return "redirect:/admin";
     }
 
-    @PostMapping(value = "/admin/deleteUser/{id}")
+    @RequestMapping(value = "/admin/deleteUser/{id}")
     public String deleteUser(@PathVariable("id") int id) {
         userService.delete(id);
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "/admin/{id}")
+    @RequestMapping(value = "/admin/{id}")
     public String getUserById(@PathVariable("id") int id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("user", user);
