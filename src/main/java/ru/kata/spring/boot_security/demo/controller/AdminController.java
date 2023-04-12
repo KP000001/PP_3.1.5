@@ -66,6 +66,6 @@ public class AdminController {
     public String getById(@PathVariable("id") long id, Model model) {
         User user = userService.getById(id);
         model.addAttribute("user", user);
-        return "admin";
+        return "/admin";
     }
 }
