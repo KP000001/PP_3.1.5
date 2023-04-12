@@ -12,9 +12,8 @@
 <p th:text="${'Логин: ' + user.getUsername()}">VALUE</p>
 <p th:text="${'Пароль: ' + user.getPassword()}">VALUE</p>
 <p th:text="${'Связь ролей: ' + user.getRoles()}">VALUE</p>
-<span th:each="userRole : ${user.getRoles()}">
-    <p th:text="${'Роль: ' + userRole.getName()}">VALUE</p>
-</span>
+<p th:each="userRole : ${user.getRoles()}"
+    th:text="${'Роль: ' + userRole.getName()}">VALUE</p>
 <br/>
 <form th:action="@{/logout}" method="post">
   <input type="submit" value="LOGOUT">
