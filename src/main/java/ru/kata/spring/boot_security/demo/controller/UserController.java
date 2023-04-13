@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.*;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
-    @RequestMapping(value = "/user")
+    @GetMapping
     public String homeUser(Model model, Authentication authentication) {
-        User user = (User) authentication.getPrincipal();
-        model.addAttribute("user", user);
+        model.addAttribute("user", (User) authentication.getPrincipal());
         return "user";
     }
 }
