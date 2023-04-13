@@ -15,7 +15,6 @@ public class RoleServiceImpl implements RoleService {
         this.roleRepository = roleRepository;
     }
 
-    @Transactional
     @Override
     public Role getById(long id) {
         return roleRepository.getById(id);

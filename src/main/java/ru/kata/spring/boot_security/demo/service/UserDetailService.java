@@ -3,7 +3,6 @@ package ru.kata.spring.boot_security.demo.service;
 import org.hibernate.Hibernate;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
@@ -16,7 +15,6 @@ public class UserDetailService implements UserDetailsService {
     }
 
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         Hibernate.initialize(user.getRoles());
