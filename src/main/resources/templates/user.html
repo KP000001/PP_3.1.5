@@ -1,19 +1,90 @@
-<!DOCTYPE html>
-<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <title>User</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>User panel</title>
 </head>
 <body>
-<div th:object="${user}">
-  <h5>Имя: <strong th:text="${user.name}"></strong></h5>
-  <h5>Фамилия: <strong th:text="${user.lastname}"></strong></h5>
-  <h5>Возраст: <strong th:text="${user.age}"></strong></h5>
-  <h5>Логин: <strong th:text="${user.username}"></strong></h5>
-  <h5>Пароль: <strong th:text="${user.password}"></strong></h5>
+
+<div class="container-fluid bg-light">
+    <div class="row ">
+        <div class="col-md-12 bg-dark text-white">
+            <nav class="navbar navbar-dark bg-dark">
+                <span class="navbar-text">
+                    <span th:text="${#authentication.name}"></span>
+                    with roles: <span th:each="role : ${#authentication.authorities}"
+                                      th:text="${role.getAuthority().replace('ROLE_',' ')}">[ROLE_USER, ROLE_ADMIN]</span>
+                </span>
+                <a class="nav-item text-white nav-link active mr-sm-2 " href="/logout">Logout</a>
+            </nav>
+        </div>
+
+    </div>
+    <div class="row ">
+        <div class="col-md-12 bg-light">
+            <br/>
+        </div>
+    </div>
+
+    <div class="row ">
+        <div class="col-md-2 bg-white">
+            <ul class="nav flex-column nav-pills ">
+                <li class="nav-item">
+                    <a sec:authorize="hasRole('ROLE_ADMIN')" class="nav-link" href="/admin">Admin</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/user">User</a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-10  ">
+            <h1>
+                User information-page
+            </h1>
+
+            <div class="card">
+                <h5 class="card-header">
+                    About user
+                </h5>
+                <div class="card-body">
+                    <table class="table table-hover bg-white ">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">First name</th>
+                            <th scope="col">Last name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:object="${user}">
+
+                            <td th:text="${user.id}">ID</td>
+                            <td th:text="${user.name}">First name</td>
+                            <td th:text="${user.lastname}">Last name</td>
+                            <td th:text="${user.age}">Age</td>
+                            <td th:text="${user.username}">Email</td>
+                            <td th:each="userRole : ${user.getRoles()}"
+                                th:text="${userRole.getName().replace('ROLE_','')}">Role
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<form th:action="@{/logout}" method="post">
-  <input type="submit" value="LOGOUT">
-</form>
+
 </body>
 </html>
