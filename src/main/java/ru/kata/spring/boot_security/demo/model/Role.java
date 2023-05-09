@@ -3,24 +3,32 @@ package ru.kata.spring.boot_security.demo.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
 
     @Transient
     @ManyToMany(mappedBy = "roles")
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "roles_id"),
-            inverseJoinColumns = @JoinColumn(name = "users_id"))
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
 
-    private Set<User> users;
+    private List<User> users;
 
     public Role() {
+    }
+
+    public Role(Long id, String name, List<User> users) {
+        this.id = id;
+        this.name = name;
+        this.users = users;
     }
 
     public Long getId() {
@@ -33,6 +41,18 @@ public class Role implements GrantedAuthority {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override
