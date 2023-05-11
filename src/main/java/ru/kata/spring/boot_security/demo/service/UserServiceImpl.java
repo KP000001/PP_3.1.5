@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         return userRepository.findAll();
     }
 
-    @Transactional
     public User getUser(long id) {
         return userRepository.getById(id);
     }
